@@ -28,4 +28,8 @@ public class PlayerController : MonoBehaviour
         movement.Normalize();
         m_Rb.MovePosition(m_Rb.position + movement * walkSpeed * Time.deltaTime);
     }
+    void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("Enter!!");
+    }
 }
