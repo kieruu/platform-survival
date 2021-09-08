@@ -5,15 +5,19 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float walkSpeed;
+    public Camera followCamera;
 
     private Rigidbody m_Rb;
     private GameObject m_Elevator;
     private float m_ElevatorOffsetY;
+    private Vector3 m_CameraPos;
 
      void Awake()
     {
         m_Rb = GetComponent<Rigidbody>();
         m_ElevatorOffsetY = 0;
+        m_CameraPos =
+            followCamera.transform.position - m_Rb.position;
     }
 
     // Update is called once per frame
@@ -37,6 +41,14 @@ public class PlayerController : MonoBehaviour
         movement.Normalize();
         m_Rb.MovePosition(playerPos + movement * walkSpeed * Time.fixedDeltaTime);
     }
+
+     void LateUpdate()
+    {
+
+        Debug.Log(m_CameraPos);
+        followCamera.transform.position = m_Rb.position + m_CameraPos;
+    }
+
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Elevator")) 
