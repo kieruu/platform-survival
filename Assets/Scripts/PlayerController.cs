@@ -26,10 +26,10 @@ public class PlayerController : MonoBehaviour
             verticalInput);
 
         movement.Normalize();
-        m_Rb.MovePosition(m_Rb.position + movement * walkSpeed * Time.deltaTime);
+        m_Rb.MovePosition(m_Rb.position + movement * walkSpeed * Time.fixedDeltaTime);
     }
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Enter!!");
+        if (other.CompareTag("Elevator")) Debug.Log("ElevatorEnter");
     }
 }
