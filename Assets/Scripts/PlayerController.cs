@@ -32,24 +32,18 @@ public class PlayerController : MonoBehaviour
             verticalInput);
         movement.Normalize();
 
-        Vector3 playerPos = m_Rb.position;
+        if (movement == Vector3.zero) return;
 
+        Vector3 playerPos = m_Rb.position;
         // rotation toward movement
         Quaternion targetRotation =
-            Quaternion.FromToRotation(Vector3.forward, movement);
+            Quaternion.LookRotation(movement);
 
         
         // if player is on the elevator
         if(m_Elevator != null)
         {
             playerPos.y = m_Elevator.transform.position.y + m_ElevatorOffsetY; 
-        }
-
-        // check if player is going backward
-        if(Mathf.Approximately(Vector3.Dot(movement, Vector3.forward), -1.0f))
-        {
-            //LookRotation on Y axis so target will rotate in the direction
-            targetRotation = Quaternion.LookRotation(-Vector3.forward);
         }
 
         // adjust rotation speed w/ 3rd argument
