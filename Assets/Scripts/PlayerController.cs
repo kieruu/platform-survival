@@ -30,22 +30,40 @@ public class PlayerController : MonoBehaviour
             horizontalInput,
             0,
             verticalInput);
+        movement.Normalize();
+
         Vector3 playerPos = m_Rb.position;
+
+        // rotation toward movement
+        Quaternion targetRotation =
+            Quaternion.FromToRotation(Vector3.forward, movement);
+
+        
         // if player is on the elevator
         if(m_Elevator != null)
         {
             playerPos.y = m_Elevator.transform.position.y + m_ElevatorOffsetY; 
         }
-        
 
-        movement.Normalize();
+        // check if player is going backward
+        if(Mathf.Approximately(Vector3.Dot(movement, Vector3.forward), -1.0f))
+        {
+            //LookRotation on Y axis so target will rotate in the direction
+            targetRotation = Quaternion.LookRotation(-Vector3.forward);
+        }
+
+        // adjust rotation speed w/ 3rd argument
+        targetRotation = Quaternion.RotateTowards(
+            transform.rotation,
+            targetRotation,
+            360 * Time.fixedDeltaTime);
+
         m_Rb.MovePosition(playerPos + movement * walkSpeed * Time.fixedDeltaTime);
+        m_Rb.MoveRotation(targetRotation);
     }
 
      void LateUpdate()
     {
-
-        Debug.Log(m_CameraPos);
         followCamera.transform.position = m_Rb.position + m_CameraPos;
     }
 
