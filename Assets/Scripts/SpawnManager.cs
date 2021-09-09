@@ -13,8 +13,7 @@ public class SpawnManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        m_Waves = 1;
-        SpawnEnemy();
+        m_Waves = 0;
     }
 
     void Update()
