@@ -27,5 +27,7 @@ public class EnemyController : MonoBehaviour
             .normalized;
         moveTowards.y = 0;
         m_Rb.AddForce(moveTowards * movementSpeed);
+
+        if (transform.position.y <= -15.0f) Destroy(gameObject); 
     }
 }
