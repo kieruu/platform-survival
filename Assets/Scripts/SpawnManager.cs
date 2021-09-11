@@ -10,11 +10,22 @@ public class SpawnManager : MonoBehaviour
 
     private int m_EnemyCount;
     private int m_Waves;
+    private HudManager m_HudManager;
+
 
     void Awake()
     {
         m_Waves = 0;
         enabled = false;
+
+    }
+
+    void Start()
+    {
+        m_HudManager = GameObject
+            .Find("HUD")
+            .GetComponent<HudManager>();
+        m_HudManager.UpdateWaveText(m_Waves);
     }
 
     void Update()
@@ -25,6 +36,8 @@ public class SpawnManager : MonoBehaviour
             m_Waves++;
             SpawnEnemy();
             SpawnPowerup();
+
+            m_HudManager.UpdateWaveText(m_Waves);
         }
     }
 

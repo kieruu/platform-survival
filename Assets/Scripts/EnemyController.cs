@@ -11,7 +11,10 @@ public class EnemyController : MonoBehaviour
 
     private Rigidbody m_Rb;
     private GameObject m_FollowTarget;
+    private Stats m_PlayerStats;
     private bool m_IsRecharge;
+    private HudManager m_HudManager;
+
 
     void Awake()
     {
@@ -24,6 +27,12 @@ public class EnemyController : MonoBehaviour
     void Start()
     {
         m_FollowTarget = GameObject.Find("Player");
+        m_PlayerStats = GameObject
+            .Find("Player")
+            .GetComponent<Stats>();
+        m_HudManager = GameObject
+            .Find("HUD")
+            .GetComponent<HudManager>();
     }
 
     void FixedUpdate()
@@ -43,7 +52,13 @@ public class EnemyController : MonoBehaviour
 
         }
 
-        if (transform.position.y <= -15.0f) Destroy(gameObject); 
+        if (transform.position.y <= -15.0f)
+        {
+            // add 5 points per enemy 
+            m_PlayerStats.UpdateScore(5.0f);
+            m_HudManager.UpdateScoreText(m_PlayerStats.score);
+            Destroy(gameObject);
+        }
     }
 
     private void AddCircle()

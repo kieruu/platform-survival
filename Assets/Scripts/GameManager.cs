@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public GameObject startScreen;
+    public GameObject gameHUD;
     public UnityEvent OnGameStart;
 
     private SpawnManager m_SpawnManager;
@@ -29,6 +30,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
         m_SpawnManager.StartSpawning();
         startScreen.SetActive(false);
+        gameHUD.SetActive(true);
         OnGameStart.Invoke();
     }
 
