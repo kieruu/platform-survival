@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class PlayerController : MonoBehaviour
 {
     public float walkSpeed;
@@ -20,6 +22,7 @@ public class PlayerController : MonoBehaviour
         m_CameraPos =
             followCamera.transform.position - m_Rb.position;
         m_SpeedModifier = 1;
+        
     }
 
     // Update is called once per frame
