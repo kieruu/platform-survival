@@ -37,9 +37,9 @@ public class EnemyController : MonoBehaviour
         {
             m_IsRecharge = false;
             m_Rb.AddForce(
-                moveTowards.normalized * movementSpeed * 1.2f,
+                moveTowards.normalized * movementSpeed * 0.5f,
                 ForceMode.Impulse);
-            Invoke(nameof(Recharge), 2.0f);
+            Invoke(nameof(Recharge), 3.0f);
 
         }
 

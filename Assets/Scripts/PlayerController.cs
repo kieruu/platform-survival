@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-
-
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IPausable
 {
     public float walkSpeed;
     public Camera followCamera;
+    public UnityEvent OnPlayerLost;
 
     private Rigidbody m_Rb;
     private GameObject m_Elevator;
@@ -22,12 +22,17 @@ public class PlayerController : MonoBehaviour
         m_CameraPos =
             followCamera.transform.position - m_Rb.position;
         m_SpeedModifier = 1;
-        
+        enabled = false;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        if(transform.position.y <= -15.0f)
+        {
+            OnPlayerLost.Invoke();
+        }
+
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
@@ -114,5 +119,10 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(3.0f);
         m_SpeedModifier = 1;
+    }
+
+    public void OnGameStart()
+    {
+        enabled = true;
     }
 }
